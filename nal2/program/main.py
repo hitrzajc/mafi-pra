@@ -9,64 +9,64 @@ PATH = "../latex/pdfs/"
 
 ###3### prvi del
 
-# N = 100000
-# μs = [1.01, 2, 3, 10, 15, 30]
-# for i in μs:
-#     test = Path(100000,i)
-#     test.generate()
-#     test.draw(-0.30, 2.75, -0.5, 4.5)
+N = 100000
+μs = [1.01, 2, 3, 10, 15, 30]
+for i in μs:
+    test = Path(100000,i)
+    test.generate()
+    test.draw(-0.30, 2.75, -0.5, 4.5)
 ###############
 
 
 ### Dugi del
-# N = 1000
-# path_len = 1000
-# # for i in tqdm(μs):
-# μ = 2
-# maksL = np.inf
-# minL = 0.01
-# paths = Paths(N, path_len, μ, maksL, minL)
-# paths.generate()
-# paths.flight2()
+N = 1000
+path_len = 1000
+# for i in tqdm(μs):
+μ = 2
+maksL = np.inf
+minL = 0.01
+paths = Paths(N, path_len, μ, maksL, minL)
+paths.generate()
+paths.flight2()
 ##############
 
 #### Tretji Del
-# μs = np.linspace(1.11, 4, 50)
-# y = []
-# y1 = []
-# def γ(x):
-#     if x==2:
-#         return 2
-#     if 1<x and x<3:
-#         return 2/(x-1)
-#     if x>3:
-#         return 1
+μs = np.linspace(1.11, 4, 50)
+y = []
+y1 = []
+def γ(x):
+    if x==2:
+        return 2
+    if 1<x and x<3:
+        return 2/(x-1)
+    if x>3:
+        return 1
 
-# N = 100
-# path_len = 1000
-# maksL = 1000000
-# minL = 0.01
-# for μ in tqdm(μs):
-#     paths = Paths(N,path_len,μ,maksL,minL)
-#     paths.generate()
-#     y.append(abs(paths.flight() - γ(μ)))
+N = 100
+path_len = 1000
+maksL = 1000000
+minL = 0.01
+for μ in tqdm(μs):
+    paths = Paths(N,path_len,μ,maksL,minL)
+    paths.generate()
+    y.append(abs(paths.flight() - γ(μ)))
 
-# plt.xlabel("$\mu$")
-# plt.ylabel("$\Delta \gamma (\mu)$")
-# plt.plot(μs, y)
-# plt.title("Absolutna razlika med teoretično in simulirano vrednostjo")
-# plt.savefig(PATH+"flights.pdf",bbox_inches='tight', pad_inches=0)
+plt.xlabel("$\mu$")
+plt.ylabel("$\Delta \gamma (\mu)$")
+plt.plot(μs, y)
+plt.title("Absolutna razlika med teoretično in simulirano vrednostjo")
+plt.savefig(PATH+"flights.pdf",bbox_inches='tight', pad_inches=0)
 
 ############cetrti del
-# N = 500
-# path_len = 2000
-# # for i in tqdm(μs):
-# μ = 2
-# maksL = np.inf
-# minL = 0.01
-# paths = Paths(N, path_len, μ, maksL, minL)
-# paths.generate()
-# paths.walk2()
+N = 500
+path_len = 2000
+# for i in tqdm(μs):
+μ = 2
+maksL = np.inf
+minL = 0.01
+paths = Paths(N, path_len, μ, maksL, minL)
+paths.generate()
+paths.walk2()
 
 #peti del
 μs = np.linspace(1.8, 5, 50)
@@ -106,4 +106,6 @@ plt.clf()
 
 plt.plot(μs, y1, label = "Simuliran $\\nu$($\mu$)")
 plt.plot(μs, y2, linestyle = "dashed", label = "Teoretična vrednost")
+plt.xlabel("$\mu$")
+plt.ylabel("$\gamma (\mu)$")
 plt.savefig(PATH+"walkss.pdf",bbox_inches='tight', pad_inches=0)
