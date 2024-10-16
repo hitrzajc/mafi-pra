@@ -1,0 +1,282 @@
+\documentclass[slovene,11pt,a4paper]{article}
+\usepackage[margin=2cm,bottom=3cm,foot=1.5cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5ex}
+
+\usepackage[pdftex]{graphicx}
+
+
+\usepackage{a4wide} %najaci package
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{imakeidx}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+
+\def\phi{\varphi}
+\def\eps{\varepsilon}
+\def\theta{\vartheta}
+
+\newcommand{\thisyear}{2024/25}
+
+\renewcommand{\Re}{\mathop{\rm Re}\nolimits}
+\renewcommand{\Im}{\mathop{\rm Im}\nolimits}
+\newcommand{\Tr}{\mathop{\rm Tr}\nolimits}
+\newcommand{\diag}{\mathop{\rm diag}\nolimits}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ddd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\lag}{\mathcal{L}\!}
+\newcommand{\ham}{\mathcal{H}\!}
+\newcommand{\four}[1]{\mathcal{F}\!\left(#1\right)}
+\newcommand{\bigO}[1]{\mathcal{O}\!\left(#1\right)}
+\newcommand{\sh}{\mathop{\rm sinh}\nolimits}
+\newcommand{\ch}{\mathop{\rm cosh}\nolimits}
+\renewcommand{\th}{\mathop{\rm tanh}\nolimits}
+\newcommand{\erf}{\mathop{\rm erf}\nolimits}
+\newcommand{\erfc}{\mathop{\rm erfc}\nolimits}
+\newcommand{\sinc}{\mathop{\rm sinc}\nolimits}
+\newcommand{\rect}{\mathop{\rm rect}\nolimits}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+\newcommand{\inv}[1]{\left(#1\right)^{-1}}
+\newcommand{\invf}[1]{\frac{1}{#1}}
+\newcommand{\sqr}[1]{\left(#1\right)^2}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\thalf}{\tfrac{1}{2}}
+\newcommand{\pd}{\partial}
+\newcommand{\Dd}[3][{}]{\frac{\ddd^{#1} #2}{\ddd #3^{#1}}}
+\newcommand{\Pd}[3][{}]{\frac{\pd^{#1} #2}{\pd #3^{#1}}}
+\newcommand{\avg}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\braket}[2]{\left\langle #1 \vert#2 \right\rangle}
+\newcommand{\obraket}[3]{\left\langle #1 \vert #2 \vert #3 \right \rangle}
+\newcommand{\hex}[1]{\texttt{0x#1}}
+
+\renewcommand{\iint}{\mathop{\int\mkern-13mu\int}}
+\renewcommand{\iiint}{\mathop{\int\mkern-13mu\int\mkern-13mu\int}}
+\newcommand{\oiint}{\mathop{{\int\mkern-15mu\int}\mkern-21mu\raisebox{0.3ex}{$\bigcirc$}}}
+
+\newcommand{\wunderbrace}[2]{\vphantom{#1}\smash{\underbrace{#1}_{#2}}}
+
+\renewcommand{\vec}[1]{\overset{\smash{\hbox{\raise -0.42ex\hbox{$\scriptscriptstyle\rightharpoonup$}}}}{#1}}
+\newcommand{\bec}[1]{\mathbf{#1}}
+
+
+\title{
+Matematično-fizikalni praktikum\\
+\bigskip
+\bf\Large 2.~naloga: Naključni sprehodi
+}
+
+\author{Tadej Tomažič}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+
+\newcommand{\bi}[1]{\hbox{\boldmath{$#1$}}}
+\newcommand{\bm}[1]{\hbox{\underline{$#1$}}}
+
+\begin{document}
+\pagenumbering{gobble} 
+\author{Tadej Tomažič}
+\date{\today}
+
+\maketitle
+
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\listoffigures
+\newpage
+\section{Uvod}
+Naključni sprehodi so vrsta gibanja, pri katerem
+v velikem številu korakov napredujemo iz izhodišča
+v neko končno lego, tako da se parametri vsakega naslednjega
+koraka sproti naključno določajo.  Običajni zgled
+je Brownovo gibanje (difuzija) drobnih delcev barvila
+po mirujoči homogeni tekočini, kjer je spočetka barvilo
+zbrano v izhodišču.  ``Težišče'' barvila
+$\langle x(t)\rangle$ v povprečju ostane v izhodišču,
+razen če v tekočini vzpostavimo kako anizotropijo (na primer
+v dveh razsežnostih z vsiljeno rotacijo).  ``Razmazanost''
+po dolgem času je sorazmerna s časom,
+\begin{equation*}
+  \sigma^2(t) \equiv \langle x^2(t)\rangle - \langle x(t)\rangle^2 = 2 D t \>.
+\end{equation*}
+Sorazmernostni koeficient je običajna difuzijska konstanta,
+priča smo normalni difuziji.  Ta rezultat izhaja iz
+centralnega limitnega teorema (CLT), ki izraža,
+da je rezultantna porazdelitev končnih leg pri difuziji
+porazdeljena normalno (Gauss), če so le povprečni časi
+med koraki in povprečni kvadrati dolžin korakov končni.
+
+Zanimiveje je opazovati naključne sprehode, pri katerih dovolimo
+nadpovprečno dolge korake.  Verjetnostno gostoto porazdelitve
+po dolžinah posameznih korakov parametrizirajmo v potenčni obliki
+\begin{equation}
+p(l) \propto l^{-\mu} \>,
+\label{lpow}
+\end{equation}
+kjer naj bo $1 < \mu < 3$.  Tedaj postane drugi moment porazdelitve
+\begin{equation*}
+  \langle l^2\rangle = \int l^2 p(l) \dd l
+\end{equation*}
+neskončen.  Govorimo o anomalni difuziji, prisotni pri celi dru\v zini
+kinematičnih distribucij dolžin poti z "debelimi repi".
+
+Ustrezno sliko naključnega gibanja, povezanega s temi dolgimi koraki, lahko
+interpretiramo na dva načina:
+\begin{itemize}
+  \item L\'evyjev pobeg oz. polet ({\sl flight\/}), implicira, da vsak korak iz
+  porazdelitve~(\ref{lpow}) traja enako dolgo, medtem ko se hitrost gibanja med koraki (divje) spreminja.
+  \item L\'evyjev sprehod ({\sl walk\/}), ki interpretira korak iz porazdelitve~(\ref{lpow}) kot  gibanje s konstantno hitrostjo in
+  tako koraki trajajo različno dolgo časa (dolžina koraka je sorazmerna s časom).
+\end{itemize}
+
+Slednja intepretacija bolj ustreza fizikalni sliki naključnega gibanja delca skozi snov, medtem ko
+se prva interpretacija uporablja v druga\v cnih aplikacijah.
+
+Vse naloge lahko obravnavaš za obe interpretaciji, pobegov in sprehodov. V prvem primeru (pobeg, flight) je
+prete\v ceni \v cas direktno sorazmeren s \v stevilom korakov, v drugem primeru (sprehod, walk) pa je
+prete\v ceni \v cas  sorazmeren z vsoto dol\v zine korakov.
+
+
+Pri anomalni difuziji razmazanost (varianca) velike množice
+končnih leg naključnih L\'evyjevih \textbf{sprehodov (walks)} narašča z drugačno potenco časa.
+Velja $\sigma^2(t) \sim t^\gamma$, kjer je
+\begin{align*}
+1 < \mu < 2 \>, &\qquad \gamma = 2 \> &\qquad&  \text{(balistični režim)}\>, \\
+2 < \mu < 3 \>, &\qquad \gamma = 4 - \mu &\qquad&  \text{(super-difuzivni režim)}\>, \\
+    \mu > 3 \>, &\qquad \gamma = 1 &\qquad&  \text{(normalna difuzija)} \>.
+\end{align*}
+Za $\mu=2$ pričakujemo $\sigma^2(t) \sim t^2 / \ln t$,
+za $\mu=3$ pa $\sigma^2(t) \sim t \ln t$ (glej na primer \cite{weeks}
+in druge reference prav tam).
+
+Slika je nekoliko drugačna pri opazovanju naključnih L\'evyjevih \textbf{poletov (flights)}.
+Spet vzamemo zvezo $\sigma^2(t) \sim t^\gamma$ in dobimo odvisnosti
+\begin{align*}
+1 < \mu < 3 \>, &\qquad \gamma = \frac{2}{\mu-1} \> &\qquad&  \text{(super-difuzivni režim)}\>, \\
+    \mu > 3 \>, &\qquad \gamma = 1 &\qquad&  \text{(normalna difuzija)} \>.
+\end{align*}
+Pri $\mu=2$ očitno pričakujemo $\sigma^2(t) \sim t^2 $, torej balistični režim.
+\newline
+
+
+{\sl Statistični komentar:} v primerih, ko je drugi
+moment porazdelitve neskončen, bo tudi račun razmazanosti
+končnih leg $x_n$ v obliki
+\begin{equation}
+\sigma^2 = \frac{1}{N-1} \sum_{n=1}^N \left( x_n - \langle x \rangle \right)^2
+\label{sig2}
+\end{equation}
+divergiral oziroma bo imel ob ponovnih zagonih naključnega sprehoda
+močno raztresene vrednosti.  Pomagaš si lahko na več načinov.
+širino porazdelitve končnih leg lahko oceniš tako, da prilagajaš
+Gaussovo krivuljo zgolj centralnega dela porazdelitve, tako da
+s prilagajanjem ne zajameš štrlečih (ne-Gaussovskih) repov.
+Lahko tudi neposredno računaš vsoto~(\ref{sig2}), a vanjo
+vključiš samo ``razumne'' člene (izpusti na primer nekaj
+odstotkov najmanjših in nekaj odstotkov največjih).
+Tretja možnost je, da definiramo novo vrsto variance
+\begin{equation*}
+  \sigma / N^p
+\end{equation*}
+in poiščemo tako potenco $p$, da ta spremenljivka konvergira
+za velike $N$ (oz. velike $t$).  še ena možnost je, da vzameš
+kako robustno mero za množico vrednosti $X_i$, na primer MAD,
+``median absolute deviation''
+\begin{equation*}
+  \mathrm{MAD} \equiv \mathrm{median}_i\left( | X_i - \mathrm{median}_j X_j | \right) \>.
+\end{equation*}
+Z njo merimo povprečje absolutne vrednosti deviacije na način,
+ki je zelo malo občutljiv na oddaljene vrednosti v repih porazdelitve,
+saj te vrednosti na račun mediane bistveno manj vplivajo kot na
+račun običajne povprečne vrednosti.
+
+
+\bigskip
+
+{\sl Naloga:} Napravi računalniško simulacijo
+dvorazsežne naključne hoje za \textbf{polete in sprehode}.  Začni vedno v izhodišču
+($x=y=0$), nato pa določi naslednjo lego tako, da naključno
+izbereš smer koraka in statistično neodvisno od te izbire
+še njegovo dolžino, torej
+\begin{eqnarray*}
+x &\leftarrow& x + l \cos\phi \>, \\
+y &\leftarrow& y + l \sin\phi \>,
+\end{eqnarray*}
+kjer je $\phi$ enakomerno naključno porazdeljen po intervalu
+$[0,2\pi]$, dolžina koraka $l$ pa naj bo porazdeljena
+v skladu s potenčno obliko~(Enačba \ref{lpow}). 
+Dolžine $l_i$ je v tem primeru potrebno generirati po verjetnostni
+porazdelitvi w(l)$\sim$ p(l) (Enačba \ref{lpow}). Za izra\v cun algoritma je osnova naslednja
+formula:
+\begin{equation}
+\int\limits_{a}^{l} w(t)\,  dt = \rho \cdot \int\limits_{a}^{b}  w(t)\, dt, \label{3}
+\end{equation}
+ki jo je potrebno re\v siti in iz nje izraziti spremenljivko $l$. Tu je 
+$\rho$ (psevdo-)naključno število na intervalu $[0,1]$ ter je $[a,b]$ 
+relevantni interval vzorčenja.
+Za nekatere porazdelitve je izra\v cun preprost, npr $w(t)=\frac{1}{\tau}
+e^{-\frac{t}{\tau}}$ nam da kar:
+\begin{equation}
+l=-\tau \ln(1-\rho).
+\end{equation}
+
+
+Dodatno pomoč za pretvorbo
+med verjetnostnimi porazdelitvami najdeš v gradivu v spletni učilnici 
+ter na spletu. 
+
+{\sl Opomba:} Korakaš lahko tudi v kartezičnem sistemu,
+\begin{eqnarray*}
+x &\leftarrow& x + f_x(\rho_1) \>, \\
+y &\leftarrow& y + f_y(\rho_2) \>,
+\end{eqnarray*}
+kjer sta $\rho_1$ in $\rho_2$ naključni števili na intervalu $[0,1]$
+ali $[-1/2,1/2]$, funkciji $f_{x,y}$ pa morata na koncu podati ustrezno 
+porazdelitev po dolžinah poti glede na potenčno obliko~(\ref{lpow}), kjer 
+lahko določiš zvezo med porazdelitvami po končnih legah $x$ ali $y$ ter  
+po $l=\sqrt{x^2+y^2}$ z uporabo ustreznega Jacobijevega faktorja.
+
+V vsakem primeru nariši nekaj značilnih
+slik sprehodov za $10$, $100$, $1000$ in $10000$ korakov.
+Iz velikega števila sprehodov z velikim številom korakov
+nato poskusi določiti eksponent $\gamma$ za nekaj izbranih
+parametrov $\mu$ oziroma funkcij $f(x)$ v posameznih primerih
+ter presodi, za kakšno vrsto difuzije gre.
+
+\bigskip
+{\sl Dodatna naloga:} Naključno spreminjaj še čas,
+ko delec pred naslednjim korakom miruje (s tako dodatno
+prostostno stopnjo poskušamo modelirati tako imenovani
+``sticking time'' ali ``trapping time'' pri anomalni difuziji
+elektronov v amorfnih snoveh).  Ustrezna verjetnostna gostota
+naj ima potenčno odvisnost
+$$
+p(t) \propto t^{-\nu} \>,
+$$
+kjer $1 < \nu < 2$.  Je ta odvisnost razklopljena od porazdelitve
+osnovnega naključnega sprehoda po dolžinah (oziroma časih)
+posameznih korakov?
+
+\begin{thebibliography}{99}
+  \setlength{\itemsep}{.2\itemsep}\setlength{\parsep}{.5\parsep}
+  \bibitem{weeks} E.~R.~Weeks, J.~S.~Urbach, H.~L.~Swinney, Physica D {\bf 97} (1996) 291.
+\end{thebibliography}
+
+\include{poglavje1}
+\end{document}
