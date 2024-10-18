@@ -86,19 +86,19 @@ for i in range(num_algos):
         tmp.use_alg(i)
         end_time = time.time()
         ys[i].append(end_time-start_time)
-        if j == 110 and i == num_algos-2: #110
+        if end_time-start_time > 10:
             break
-        if j==50 and i == num_algos-1: #50
-            break
+        # if j == 110 and i == num_algos-2: #110
+        #     break
+        # if j==50 and i == num_algos-1: #50
+        #     break
     plt.plot(np.arange(1,len(ys[i])+1,1), ys[i], label = names[i])
 plt.legend()
-plt.ylabel("$t[ms]$")    
+plt.ylabel("$t[s]$")    
 plt.xlabel("N")
 plt.grid()
 
 plt.savefig(PATH + "t(N).pdf",bbox_inches='tight', pad_inches=0)
 
 plt.yscale("log")
-plt.xscale("log")
-# plt.show()
 plt.savefig(PATH + "t(N)log.pdf",bbox_inches='tight', pad_inches=0)
