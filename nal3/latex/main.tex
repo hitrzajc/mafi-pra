@@ -1,0 +1,222 @@
+\documentclass[slovene,11pt,a4paper]{article}
+\usepackage[margin=2cm,bottom=3cm,foot=1.5cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5ex}
+
+\usepackage[pdftex]{graphicx}
+
+
+\usepackage{a4wide} %najaci package
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{imakeidx}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+
+\def\phi{\varphi}
+\def\eps{\varepsilon}
+\def\theta{\vartheta}
+
+\newcommand{\thisyear}{2024/25}
+
+\renewcommand{\Re}{\mathop{\rm Re}\nolimits}
+\renewcommand{\Im}{\mathop{\rm Im}\nolimits}
+\newcommand{\Tr}{\mathop{\rm Tr}\nolimits}
+\newcommand{\diag}{\mathop{\rm diag}\nolimits}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ddd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\lag}{\mathcal{L}\!}
+\newcommand{\ham}{\mathcal{H}\!}
+\newcommand{\four}[1]{\mathcal{F}\!\left(#1\right)}
+\newcommand{\bigO}[1]{\mathcal{O}\!\left(#1\right)}
+\newcommand{\sh}{\mathop{\rm sinh}\nolimits}
+\newcommand{\ch}{\mathop{\rm cosh}\nolimits}
+\renewcommand{\th}{\mathop{\rm tanh}\nolimits}
+\newcommand{\erf}{\mathop{\rm erf}\nolimits}
+\newcommand{\erfc}{\mathop{\rm erfc}\nolimits}
+\newcommand{\sinc}{\mathop{\rm sinc}\nolimits}
+\newcommand{\rect}{\mathop{\rm rect}\nolimits}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+\newcommand{\inv}[1]{\left(#1\right)^{-1}}
+\newcommand{\invf}[1]{\frac{1}{#1}}
+\newcommand{\sqr}[1]{\left(#1\right)^2}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\thalf}{\tfrac{1}{2}}
+\newcommand{\pd}{\partial}
+\newcommand{\Dd}[3][{}]{\frac{\ddd^{#1} #2}{\ddd #3^{#1}}}
+\newcommand{\Pd}[3][{}]{\frac{\pd^{#1} #2}{\pd #3^{#1}}}
+\newcommand{\avg}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\braket}[2]{\left\langle #1 \vert#2 \right\rangle}
+\newcommand{\obraket}[3]{\left\langle #1 \vert #2 \vert #3 \right \rangle}
+\newcommand{\hex}[1]{\texttt{0x#1}}
+
+\renewcommand{\iint}{\mathop{\int\mkern-13mu\int}}
+\renewcommand{\iiint}{\mathop{\int\mkern-13mu\int\mkern-13mu\int}}
+\newcommand{\oiint}{\mathop{{\int\mkern-15mu\int}\mkern-21mu\raisebox{0.3ex}{$\bigcirc$}}}
+
+\newcommand{\wunderbrace}[2]{\vphantom{#1}\smash{\underbrace{#1}_{#2}}}
+
+\renewcommand{\vec}[1]{\overset{\smash{\hbox{\raise -0.42ex\hbox{$\scriptscriptstyle\rightharpoonup$}}}}{#1}}
+\newcommand{\bec}[1]{\mathbf{#1}}
+
+
+\title{
+Matematično-fizikalni praktikum\\
+\bigskip
+\bf\Large 3.~naloga: Lastne vrednosti in lastni vektorji
+}
+
+\author{Tadej Tomažič}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+
+\newcommand{\bi}[1]{\hbox{\boldmath{$#1$}}}
+\newcommand{\bm}[1]{\hbox{\underline{$#1$}}}
+
+\begin{document}
+\pagenumbering{gobble} 
+\author{Tadej Tomažič}
+\date{\today}
+
+\maketitle
+
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\listoffigures
+\newpage
+
+
+\section{Naloga}
+Enodimenzionalni linearni harmonski oscilator (delec mase $m$
+s kinetično energijo $T(p)=p^2/2m$ v kvadratičnem potencialu
+$V(q)=m\omega^2 q^2/2$) opišemo z brezdimenzijsko Hamiltonovo funkcijo
+\begin{equation*}
+  H_0 = {1\over 2} \left( p^2 + q^2 \right) \>,
+\end{equation*}
+tako da energijo merimo v enotah $\hbar\omega$, gibalne količine
+v enotah $(\hbar m\omega)^{1/2}$ in dolžine v enotah $(\hbar/m\omega)^{1/2}$.
+Lastna stanja $|n\rangle$ nemotenega Hamiltonovega operatorja $H_0$
+poznamo iz osnovnega tečaja kvantne mehanike [Strnad III]:
+v koordinatni reprezentaciji so lastne valovne funkcije
+\begin{equation*}
+  |n\rangle = (2^n n! \sqrt{\pi})^{-1/2} \mathrm{e}^{-q^2/2}\,  {\cal H}_n (q)\>,
+\end{equation*}
+kjer so ${\cal H}_n$ Hermitovi polinomi.
+Lastne funkcije zadoščajo stacionarni Schr\"odingerjevi enačbi
+\begin{equation*}
+H_0 | n^0 \rangle = E_n^0 | n^0 \rangle
+\end{equation*}
+z nedegeneriranimi lastnimi energijami $E_n^0 = n + 1/2$
+za $n=0,1,2,\ldots~$.  Matrika $\langle i | H_0 | j\rangle$
+z $i,j=0,1,2,\ldots,N-1$ je očitno diagonalna, z vrednostmi
+$\delta_{ij}(i + 1/2)$ po diagonali.  Nemoteni Hamiltonki
+dodamo anharmonski člen
+\begin{equation*}
+H = H_0 + \lambda q^4 \>.
+\end{equation*}
+Kako se zaradi te motnje spremenijo lastne energije?
+Iščemo torej matrične elemente $\langle i | H | j\rangle$
+{\sl motenega\/} Hamiltonovega operatorja v bazi {\sl nemotenih\/}
+valovnih funkcij $| n^0\rangle$, kar vemo iz perturbacijske
+teorije v najnižjem redu.  Pri računu si pomagamo
+s pričakovano vrednostjo prehodnega matričnega
+elementa za posplošeno koordinato
+$$
+q_{ij} = \langle i | q | j \rangle
+       = {1\over 2} \sqrt{i+j+1}\,\, \delta_{|i-j|,1} \>,
+$$
+ki, mimogrede, uteleša izbirno pravilo za električni dipolni
+prehod med nivoji harmonskega oscilatorja.  V praktičnem računu
+moramo seveda matriki $q_{ij}$ in $\langle i | H | j\rangle$
+omejiti na neko končno razsežnost $N$.
+
+\bigskip
+
+{\sl Naloga\/}: Z diagonalizacijo poišči nekaj najnižjih lastnih
+vrednosti in lastnih valovnih funkcij za moteno Hamiltonko
+$H = H_0 + \lambda q^4$
+ob vrednostih parametra $0\le\lambda\le 1$.  Rešujemo torej
+matrični problem lastnih vrednosti
+\begin{equation*}
+  H | n \rangle = E_n | n \rangle \>.
+\end{equation*}
+Nove (popravljene) valovne funkcije $| n\rangle$ so seveda
+linearna kombinacija starih (nemotenih) valovnih funkcij $| n^0\rangle$.
+Matrike velikosti do $N=3$ ali $N=4$ lahko za silo diagonaliziramo peš;
+za diagonalizacijo pri večjih $N$ uporabi enega ali več numeričnih postopkov,
+na primer rutine {\tt tred2} in {\tt tqli}
+iz zbirke Numerical Recipes ali iz kakega drugega vira (npr Python). Vsaj enega izmed
+postopkov izvedi 'ročno' (sprogramiraj, uporabi izvorno kodo).  Preveri,
+da v limiti $\lambda\to 0$ velja $E_n\to E_n^0$
+(če ne velja, je verjetno nekaj narobe s programom).
+Razišči, kako so rezultati odvisni od razsežnosti $N$ matrik
+$H_0$ oziroma $q^4$.  Kakšna je konvergenca lastnih vrednosti
+pri velikih $N$?
+
+\bigskip
+
+Namesto da računamo matrične elemente
+$q_{ij}=\langle i | q | j \rangle$ in perturbacijsko matriko
+razumemo kot $[ q_{ij} ]^4$, bi lahko računali tudi matrične
+elemente kvadrata koordinate
+\begin{equation*}
+q^{(2)}_{ij} = \langle i | q^2 | j \rangle
+\end{equation*}
+in motnjo razumeli kot kvadrat ustrezne matrike,
+\begin{equation*}
+\lambda q^4 \to \lambda \left[ \, q^{(2)}_{ij} \,\right]^2 \>,
+\end{equation*}
+ali pa bi računali matrične elemente četrte potence koordinate
+\begin{equation*}
+q^{(4)}_{ij} = \langle i | q^4 | j \rangle
+\end{equation*}
+in kar to matriko razumeli kot motnjo,
+\begin{equation*}
+\lambda q^4 \to \lambda \left[ \, q^{(4)}_{ij} \,\right] \>.
+\end{equation*}
+Kakšne so razlike med naštetimi tremi načini izračuna
+lastnih vrednosti in funkcij?  Pri računu poleg enačbe za $\langle i | q | j \rangle$ uporabi še enačbi
+\begin{equation*}
+\langle i|q^2|j\rangle
+  = {1\over 2} \biggl[
+    {\sqrt{j(j-1)}} \, \delta_{i,j-2}
+  + {(2j+1)} \, \delta_{i,j}
+  + {\sqrt{(j+1)(j+2)}} \, \delta_{i,j+2} \biggr]
+\end{equation*}
+ter
+\begin{eqnarray*}
+\langle i|q^4|j\rangle
+  = {1\over 2^4}\sqrt{2^i \, i!\over 2^{j} \, j! } \, \biggl[ \,
+  &\,& \delta_{i,j+4} + 4\left(2j+3\right) \delta_{i,j+2}
+                      + 12 \left(2j^2+2j+1\right) \, \delta_{i,j} \\[3pt]
+  &+& 16j \left(2j^2-3j+1\right) \, \delta_{i,j-2}
+     + 16j\left(j^3-6j^2+11j-6\right) \, \delta_{i,j-4} \biggr] \>,
+\end{eqnarray*}
+ki ju ni težko izpeljati iz rekurzijskih zvez za Hermitove
+polinome.
+
+\bigskip
+
+{\sl Dodatna naloga\/}: Poišči še nekaj najnižjih lastnih energij
+in lastnih funkcij za problem v potencialu z dvema minimumoma
+\begin{equation*}
+H = {p^2\over 2} - 2q^2 + {q^4\over 10} \>.
+\end{equation*}
+\include{poglavje1}
+\end{document}
