@@ -8,64 +8,59 @@ from tqdm import tqdm
 N = 10
 PATH = "../latex/pdfs/"
 
-# matplotlib.rcParams['mathtext.fontset'] = 'custom'
-# matplotlib.rcParams['mathtext.rm'] = 'Bitstream Vera Sans'
-# matplotlib.rcParams['mathtext.it'] = 'Bitstream Vera Sans:italic'
-# matplotlib.rcParams['mathtext.bf'] = 'Bitstream Vera Sans:bold'
-
 ###############################
 #######   #spektri  ###########
 ###############################
+types = ["$\langle i|q|j \\rangle ^4$", "$\langle i|q^2|j\\rangle ^2$", "$\langle i|q^4|j \\rangle $"]
+λs = np.linspace(0,1, 1000)
+N = 4
+for k in range(3):
+    ys = [[] for i in range(N)]
+    for λ in λs:
+        matrix = Matrix(N, λ)
+        matrix.fillings[k]()
+        sort = sorted(matrix.eigvals())
+        for i in range(N):
+            ys[i].append(sort[i])
 
-# λs = np.linspace(0,1, 1000)
-# N = 4
-# for k in range(3):
-#     ys = [[] for i in range(N)]
-#     for λ in λs:
-#         matrix = Matrix(N, λ)
-#         matrix.fillings[k]()
-#         sort = sorted(matrix.eigvals())
-#         for i in range(N):
-#             ys[i].append(sort[i])
-
-#     for i in range(N):
-#         plt.plot(λs, ys[i])
-    
-#     plt.xlabel("$\lambda$")
-#     plt.ylabel("E")
-#     plt.title("Spekter hamiltoniana tipa {}".format(k+1))
-#     plt.grid()
-#     plt.savefig(PATH+"spekter_{}.pdf".format(k+1), bbox_inches='tight', pad_inches=0)
-#     plt.clf()
+    for i in range(N):
+        plt.plot(λs, ys[i], label="$E_{}$".format(i))
+    plt.legend()
+    plt.xlabel("$\lambda$")
+    plt.ylabel("E")
+    plt.title("Spekter hamiltoniana tipa {}".format(types[k]))
+    plt.grid()
+    plt.savefig(PATH+"spekter_{}.pdf".format(k+1), bbox_inches='tight', pad_inches=0)
+    plt.clf()
 
 #########################################
 ##  Odvisnost priblizka od velikosti N ##
 #########################################
-# types = ["$\langle i|q|j \\rangle ^4$", "$\langle i|q^2|j\\rangle ^2$", "$\langle i|q^4|j \\rangle $"]
-# λ = 0.1
-# Ns = np.arange(4,100,1)
-# for k in range(3):
-#     ys = [[] for i in range(4)]
-#     for i in tqdm(Ns):
-#         matrix = Matrix(i, λ)
-#         matrix.fillings[k]()
-#         # eigs = matrix.eigh()[0][:4]
-#         eigs = sorted(matrix.eigvals())[:4]
-#         for j in range(len(eigs)):
-#             ys[j].append(eigs[j])
+types = ["$\langle i|q|j \\rangle ^4$", "$\langle i|q^2|j\\rangle ^2$", "$\langle i|q^4|j \\rangle $"]
+λ = 0.1
+Ns = np.arange(4,100,1)
+for k in range(3):
+    ys = [[] for i in range(4)]
+    for i in tqdm(Ns):
+        matrix = Matrix(i, λ)
+        matrix.fillings[k]()
+        # eigs = matrix.eigh()[0][:4]
+        eigs = sorted(matrix.eigvals())[:4]
+        for j in range(len(eigs)):
+            ys[j].append(eigs[j])
 
-#     for i in range(4):
-#         plt.plot(Ns, np.array(ys[i])-ys[i][-1], label = "$E_{}$".format(i))
-#     plt.legend()
-#     plt.title(types[k])
-#     plt.grid()
-#     plt.xlabel("N")
-#     plt.ylabel("$E-E_{\infty}$")
-#     plt.savefig(PATH + "E(N){}.pdf".format(k),bbox_inches='tight', pad_inches=0)
+    for i in range(4):
+        plt.plot(Ns, np.array(ys[i])-ys[i][-1], label = "$E_{}$".format(i))
+    plt.legend()
+    plt.title(types[k])
+    plt.grid()
+    plt.xlabel("N")
+    plt.ylabel("$E-E_{\infty}$")
+    plt.savefig(PATH + "E(N){}.pdf".format(k),bbox_inches='tight', pad_inches=0)
 
-#     plt.yscale("log")
-#     plt.savefig(PATH + "log(E(N)){}.pdf".format(k),bbox_inches='tight', pad_inches=0)
-#     plt.clf()
+    plt.yscale("log")
+    plt.savefig(PATH + "log(E(N)){}.pdf".format(k),bbox_inches='tight', pad_inches=0)
+    plt.clf()
 
 ##############################
 ### CASOVNA ZAHTEVNOST #######

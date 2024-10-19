@@ -84,12 +84,12 @@ class Matrix:
         self.fill()
     
     def eigvals(self):
-        return linalg.eigvals(self.matrix)
+        return scipy.linalg.eigvals(self.matrix)
     
     def eigh(self):
-        return linalg.eigh(self.matrix)
+        return scipy.linalg.eigh(self.matrix)
     def eig(self):
-        return linalg.eig(self.matrix)
+        return scipy.linalg.eig(self.matrix)
 
     def qr(self, M):
         A = np.copy(M)
@@ -109,20 +109,6 @@ class Matrix:
         H = np.eye(a.shape[0])
         H -= (2 / np.dot(v, v)) * np.outer(v,v)
         return H
-
-    def qr_givens(self, M):
-        A = np.copy(M)
-        m, n = A.shape
-        Q = np.eye(m)
-        for j in range(n - (m == n)):
-            for i in range(j+1,m):
-                r=np.hypot(A[j,j],A[i,j])
-                c=A[j,j]/r
-                s=A[i,j]/r
-                givensRot = np.array([[c, s],[-s,  c]])
-                A[[j,i],j:] = np.dot(givensRot, A[[j,i],j:])
-                Q[[j,i],:] = np.dot(givensRot, Q[[j,i],:])
-        return Q.T, A
 
     def trid_householder(self,M):
         A = np.copy(M)
