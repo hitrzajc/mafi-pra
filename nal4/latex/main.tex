@@ -1,0 +1,212 @@
+\documentclass[slovene,11pt,a4paper]{article}
+\usepackage[margin=2cm,bottom=3cm,foot=1.5cm]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5ex}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{pgffor}
+
+\usepackage{a4wide} %najaci package
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{imakeidx}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+
+\def\phi{\varphi}
+\def\eps{\varepsilon}
+\def\theta{\vartheta}
+
+\newcommand{\thisyear}{2024/25}
+
+\renewcommand{\Re}{\mathop{\rm Re}\nolimits}
+\renewcommand{\Im}{\mathop{\rm Im}\nolimits}
+\newcommand{\Tr}{\mathop{\rm Tr}\nolimits}
+\newcommand{\diag}{\mathop{\rm diag}\nolimits}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ddd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\lag}{\mathcal{L}\!}
+\newcommand{\ham}{\mathcal{H}\!}
+\newcommand{\four}[1]{\mathcal{F}\!\left(#1\right)}
+\newcommand{\bigO}[1]{\mathcal{O}\!\left(#1\right)}
+\newcommand{\sh}{\mathop{\rm sinh}\nolimits}
+\newcommand{\ch}{\mathop{\rm cosh}\nolimits}
+\renewcommand{\th}{\mathop{\rm tanh}\nolimits}
+\newcommand{\erf}{\mathop{\rm erf}\nolimits}
+\newcommand{\erfc}{\mathop{\rm erfc}\nolimits}
+\newcommand{\sinc}{\mathop{\rm sinc}\nolimits}
+\newcommand{\rect}{\mathop{\rm rect}\nolimits}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+\newcommand{\inv}[1]{\left(#1\right)^{-1}}
+\newcommand{\invf}[1]{\frac{1}{#1}}
+\newcommand{\sqr}[1]{\left(#1\right)^2}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\thalf}{\tfrac{1}{2}}
+\newcommand{\pd}{\partial}
+\newcommand{\Dd}[3][{}]{\frac{\ddd^{#1} #2}{\ddd #3^{#1}}}
+\newcommand{\Pd}[3][{}]{\frac{\pd^{#1} #2}{\pd #3^{#1}}}
+\newcommand{\avg}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\braket}[2]{\left\langle #1 \vert#2 \right\rangle}
+\newcommand{\obraket}[3]{\left\langle #1 \vert #2 \vert #3 \right \rangle}
+\newcommand{\hex}[1]{\texttt{0x#1}}
+
+\renewcommand{\iint}{\mathop{\int\mkern-13mu\int}}
+\renewcommand{\iiint}{\mathop{\int\mkern-13mu\int\mkern-13mu\int}}
+\newcommand{\oiint}{\mathop{{\int\mkern-15mu\int}\mkern-21mu\raisebox{0.3ex}{$\bigcirc$}}}
+
+\newcommand{\wunderbrace}[2]{\vphantom{#1}\smash{\underbrace{#1}_{#2}}}
+
+\renewcommand{\vec}[1]{\overset{\smash{\hbox{\raise -0.42ex\hbox{$\scriptscriptstyle\rightharpoonup$}}}}{#1}}
+\newcommand{\bec}[1]{\mathbf{#1}}
+
+\title{
+\sc\large Matematično-fizikalni praktikum \thisyear \\
+\bigskip
+\bf\Large 4.~naloga: Fourierova analiza
+}
+
+\author{Tadej Tomažič}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+\begin{document}
+
+\pagenumbering{gobble} 
+\author{Tadej Tomažič}
+\date{\today}
+
+\maketitle
+
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\listoffigures
+\newpage
+
+
+\section{Naloga}
+Pri numeričnem izračunavanju Fourierove transformacije
+\begin{equation}
+H(f) = \int_{-\infty}^\infty
+h(t)\exp(2 \pi \ii f t)\dd t
+\label{eq:ft}
+\end{equation}
+\begin{equation}
+h(t) = \int_{-\infty}^\infty
+H(f)\exp(-2 \pi \ii f t)\dd f
+\end{equation}
+je funkcija $h(t)$ običajno predstavljena s tablico diskretnih
+vrednosti
+\begin{equation}
+  h_k = h(t_k),\quad t_k = k \Delta, \quad k=0,1,2,\dots N-1.
+  \label{eq:discrete}
+\end{equation}
+Pravimo, da smo funkcijo vzorčili z vzorčno gostoto (frekvenco) $f=1/\Delta$.
+Za tako definiran vzorec obstaja naravna meja frekvenčnega spektra,
+ki se imenuje {\sl Nyquistova frekvenca}, $f_c =1/(2\Delta)$:
+harmonični val s to frekvenco ima v vzorčni gostoti ravno
+dva vzorca v periodi.
+če ima funkcija $h(t)$ frekvenčni spekter omejen na interval
+$[-f_c, f_c ]$, potem ji z vzorčenjem nismo odvzeli nič informacije,
+kadar pa se spekter razteza izven intervala, pride do {\sl potujitve\/}
+({\sl aliasing\/}), ko se zunanji del spektra preslika v interval.
+
+Frekvenčni spekter vzorčene funkcije (\ref{eq:discrete}) računamo samo
+v $N$ točkah, če hočemo, da se ohrani količina informacije.
+Vpeljemo vsoto
+\begin{equation}
+H_n = \sum_{k=0}^{N-1}
+h_k \exp(2 \pi \ii k n / N),
+\qquad n=-\tfrac{N}{2},\dots ,\tfrac{N}{2},
+\label{eq:dft}
+\end{equation}
+ki jo imenujemo diskretna Fourierova transformacija
+in je povezana s funkcijo v (\ref{eq:ft}) takole:
+\begin{equation*}
+H(\tfrac{n}{N\Delta}) \approx \Delta\cdot H_n .
+\end{equation*}
+Zaradi potujitve, po kateri je $H_{-n} = H_{N-n}$, lahko pustimo
+indeks $n$ v enačbi (\ref{eq:dft}) teči tudi od 0 do $N$. Spodnja polovica
+tako definiranega spektra ($1 \le n \le \tfrac{N}{2}-1$) ustreza pozitivnim
+frekvencam $0 < f < f_c$, gornja polovica ($\tfrac{N}{2}+1 \le N-1$)
+pa negativnim, $-f_c < f < 0$.  Posebna vrednost pri $n=0$
+ustreza frekvenci nič (``istosmerna komponenta''), vrednost
+pri $n=N/2$ pa ustreza tako $f_c$ kot $-f_c$.
+
+Količine $h$ in $H$ so v splošnem kompleksne, simetrija
+v enih povzroči tudi simetrijo v drugih.  Posebej zanimivi
+so trije primeri:\par\medskip
+\begin{tabular}{@{\hspace{1cm}}l@{\hspace{1cm}}l@{\hspace{1cm}}l@{\hspace{1cm}}l}
+če je& $h_k$ realna & tedaj je & $H_{N-n} = H_n^\ast$ \\
+      & $h_k$ realna in soda & & $H_n$ realna in soda \\
+      & $h_k$ realna in liha & & $H_n$ imaginarna in liha
+\end{tabular}
+\par\medskip
+(ostalih ni težko izpeljati).
+V tesni zvezi s frekvenčnim spektrom je tudi moč.
+{\sl Celotna moč\/} nekega signala je neodvisna od
+reprezentacije, Parsevalova enačba pove
+\begin{equation*}
+\sum_{k=0}^{N-1} | h_k |^2 = {1\over N}\sum_{n=0}^{N-1} | H_n |^2
+\end{equation*}
+(lahko preveriš).  Pogosto pa nas bolj zanima, koliko moči
+je vsebovane v frekvenčni komponenti med $f$ in $f+\dd f$, zato
+definiramo enostransko spektralno gostoto moči ({\sl one-sided
+power spectral density\/}, PSD)
+\begin{equation*}
+P_n = | H_n |^2 + | H_{N-n} |^2 \>.
+\end{equation*}
+Pozor: s takšno definicijo v isti koš mečemo negativne
+in pozitivne frekvence, vendar sta pri realnih signalih $h_k$
+prispevka enaka, tako da je $P_n = 2\,| H_n |^2$.
+
+Z obratno transformacijo lahko tudi rekonstruiramo $h_k$ iz $H_n$
+\begin{equation}
+  h_k = {1\over N} \sum_{n=0}^{N-1} H_n \exp(-2 \pi \ii k n / N)
+  \label{eq:inverz}
+\end{equation}
+(razlika glede na enačbo (\ref{eq:dft}) je le predznak v argumentu
+eksponenta in utež $1/N$).
+
+\bigskip
+
+{\it Naloga\/}:
+
+\begin{enumerate}
+\item Izračunaj Fourierov obrat Gaussove porazdelitve in nekaj enostavnih vzorcev,
+npr. mešanic izbranih frekvenc. Za slednje primerjaj rezultate, ko
+je vzorec v intervalu periodičen (izbrane frekvence so mnogokratniki
+osnovne frekvence), z rezultati, ko vzorec ni periodičen (kako naredimo Gaussovo porazdelitev `periodično' za FT?).
+Opazuj pojav potujitve na vzorcu, ki vsebuje frekvence nad Nyquistovo
+frekvenco. Napravi še obratno transformacijo (\ref{eq:inverz}) in preveri
+natančnost metode. Poglej, kaj se dogaja z časom računanja - kako je odvisen od števila vzorčenj?
+\item Po Fourieru analiziraj \SI{2.3}{s} dolge zapise začetka Bachove
+partite za violino solo, ki jih najdeš na spletni strani
+Matematičnofizikalnega praktikuma.  Signal iz začetnih taktov
+partite je bil vzorčen pri \SI{44100}{Hz}, \SI{11025}{Hz}, \SI{5512}{Hz}, \SI{2756}{Hz},
+\SI{1378}{Hz} in \SI{882}{Hz}.  S poslušanjem zapisov v formatu {\tt .mp3}
+ugotovi, kaj se dogaja, ko se znižuje frekvenca vzorčenja,
+nato pa s Fourierovo analizo zapisov v formatu {\tt .txt}
+to tudi prikaži.
+\item \textbf{Dodatno:} Napravi Fourierovo analizo signalov, ki jih dobiš pri vaji
+{\sl Akustični resonator\/} pri Fizikalnem praktikumu II.
+Posnetke treh različnih signalov prav tako najdeš na spletni strani.
+\end{enumerate}
+
+
+\include{poglavje1}
+\end{document}
