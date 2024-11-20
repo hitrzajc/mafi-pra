@@ -1,0 +1,69 @@
+\section{Rešitev}
+
+Najprej si poglejmo avtokorelacijo za obe sovi.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=12cm]{pdfs/bubomono.txt_acor.pdf}
+    \vspace{10pt}
+    \includegraphics[width=12cm]{pdfs/bubo2mono.txt_acor.pdf}
+    \caption{Avtokorelacija signala sov}
+\end{figure}
+
+Preden sem koreliral signal sem vektorja samplov normiral, tako da je
+"najmočnejši" signal 1. To pomeni \[\|x\|_\infty = \max_i |x_i|\]
+
+Poglejmo si še korelacije med sovami in posnetki:
+\newpage
+\begin{figure}[h]
+    \centering
+    \foreach \mix in {mix, mix1, mix2, mix22} {
+        \foreach \sova in {bubomono, bubo2mono}{
+            \includegraphics[width=8cm]{pdfs/cor_\mix.txt_\sova.txt.pdf}
+        }
+    }
+    \caption{Korelacija sov in posnetkov iz narave}
+\end{figure}
+Tukaj je bila normalizacija drugače izbrana. Tukaj je bila narejena normalizacija korelacije. Če je varianca signala a $\sigma_a$,
+potem je $ \mathbf{x} = \mathbf{x} / \left(\sigma_a \sigma_b |\mathbf{b}|\right)$. Sigma je izračunana z \verb|numpy.std()|.
+
+
+Hitrosti so precej dolgčasno pričakovane ampak vseeno.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{pdfs/cas-lin.pdf}
+    \vspace{10pt}
+    \includegraphics[width=8cm]{pdfs/cas-log.pdf}
+    \caption{Hitrost algoritmov}
+\end{figure}
+\newpage
+\section{Dodatna naloga}
+Posnel sem dva človeka m in ž ko izgovarjata aaaaaaaaaaaa. Posnel sem jih tudi
+ko bereta slovar. Gledal sem ali lahko spet zaznam ali gre za ž glas ali m glas.
+Poglejmo si spektra njunega glasu.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=12cm]{pdfs/fft_spol.pdf}
+    \end{center}
+    \caption{Barva glasu moškega in ženske}
+\end{figure}
+
+% Glasova sta bila prej normirana, saj je bil moški glas posnet bližje mikrofona.
+% Poglejmo si zopet korelacijo med posnetki:
+% \foreach \gender in {Z, M} {
+%     \foreach \mix in {Glas\ 001, Glas\ 002}{
+%         pdfs/cor_\gender_\mix.pdf 
+%     }
+% }
+\begin{figure}[h]
+    \begin{center}
+        
+    \foreach \gender in {Z, M} {%
+        \foreach \mix in {001, 002} {%
+            \includegraphics[width=8cm]{pdfs/cor_\gender_Glas\space\mix.pdf}%    
+        }%
+        \par
+}%
+    \end{center}
+    
+    \caption{Korelacija glasa človeka in posnetkov iz branja slovarja}
+\end{figure}
