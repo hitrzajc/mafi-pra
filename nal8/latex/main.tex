@@ -1,19 +1,31 @@
 \documentclass[slovene,11pt,a4paper]{article}
-\usepackage[margin=2cm,bottom=3cm,foot=1.5cm]{geometry}
+\usepackage[margin=2cm,bottom=2cm,foot=1.5cm]{geometry}
+% \documentclass[slovene,11pt,a4paper]{article}
+% \usepackage[margin=1.7cm,bottom=3cm,foot=1.5cm]{geometry}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5ex}
 
 \usepackage[pdftex]{graphicx}
-\DeclareGraphicsExtensions{.pdf,.png}
-
-
+\usepackage{pgffor}
+\usepackage{subcaption}
+% \usepackage{a4wide} %najaci package
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{color}
+\usepackage{graphicx}
+% \usepackage{subfigure}
+\usepackage{imakeidx}
+\usepackage{adjustbox}
+\usepackage{float}
 \usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{hyperref}
 \usepackage{amsfonts}
 \usepackage{mathrsfs}
-\usepackage[usenames]{color}
-\usepackage[slovene]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{siunitx}
 
 \def\phi{\varphi}
 \def\eps{\varepsilon}
@@ -69,14 +81,27 @@
 \bigskip
 \bf\Large 8.~naloga: Robni problem lastnih vrednosti
 }
-\author{}
+\author{Tadej Tomažič}
 \date{}
 
+\makeindex[columns=3, title=Alphabetical Index, intoc]
 
 \begin{document}
-\maketitle
-\vspace{-1cm}
 
+
+\pagenumbering{gobble} 
+\author{Tadej Tomažič}
+\date{\today}
+
+\maketitle
+
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+\listoffigures
+\newpage
+\vspace{-1cm}
+\section{Navodilo}
 Pri robnem problemu lastnih vrednosti poznamo diferencialno enačbo
 in nekaj robnih pogojev (običajno vsaj toliko, kolikor je red enačbe)
 Za rešitev problema moramo v splošnem v enem zamahu določiti
