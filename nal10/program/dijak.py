@@ -4,6 +4,7 @@ from numpy import linalg as LA
 from matplotlib.animation import FuncAnimation, FFMpegWriter
 from matplotlib.colors import LogNorm
 from tqdm import tqdm
+import sympy as sp
 
 PATH = "../latex/pdf/"
 # print(plt.rcParams.keys())
@@ -24,6 +25,28 @@ def ψ(x, t, ω=0.2, λ=10): #analiticna resitu
 def V(x, k = np.sqrt(ω)):
     return 0.5*x**2*k
 
+def FD(m, n, s):
+    x = sp.Symbol('x')
+    expr = (x**s * sp.log(x)**m)
+    series_exp = sp.series(expr, x, x0=1, n=n+1).removeO()
+
+    dic = sp.collect(sp.expand(series_exp), x).as_coefficients_dict()
+    arr = []
+    for key in dic:
+        base,exp = key.as_base_exp()
+        arr.append((exp,dic[key]))
+    arr.sort()
+    out = []
+    for i in arr:
+        print(i[1])
+        out.append(float(i[1]))
+    return out
+
+
+
+
+# for i in t:
+#     print(i,t[i])
 
 x = np.linspace(-40,40,300)
 dx = x[1] - x[0]
@@ -32,28 +55,27 @@ dt = t[1] - t[0]
 ψ_0 = ψ(x,0) #initial state
 
 sol = np.zeros((len(t), len(x)), dtype=complex)
-
 sol[0] = ψ_0
 
+N = 8
+c = FD(2,N,N//2)
+print(c)
+d = (1+1j*dt/2*V(x))
+A = np.diag(d)
 
-# A = np.array([[1, 2], [3, 4]])  # 2x2 matrix
-# sol = np.array([1, 2])  # 1D vector
-# print(np.dot(A, sol),"here")  # 1D vector
-# plt.plot(x, sol[0].real)
+cof = -1j*dt/4/(dx**2)
+for r in range(len(c)):
+    pos = r-N//2
+    # print(type(c[r]))
+    A += cof*np.diag(c[r]*np.ones(len(x)-abs(pos)),pos)
+#consturct matrix A
 
+# print(A[:10,:10])
+Ac = np.conjugate(A)
 
-for i in range(1,len(sol)):
-    b = 1j*dt/2/(dx**2)
-    a = -b/2
-    d = 1j*V(x)*0.5*dt + b + 1
-
-    
-    A = np.diag(d) + np.diag(a*np.ones(len(x)-1),1) + np.diag(a*np.ones(len(x)-1),-1)
-    vec = np.dot(np.conjugate(A), sol[i-1])
-    # print(sol[i-1])
+for i in range(1,len(sol)):  
+    vec = np.dot(Ac, sol[i-1])
     sol[i] = LA.solve(A, vec)
-
-
 
 analytic = np.zeros((len(t), len(x)), dtype=complex)
 for i in range(0,len(t)):
@@ -61,22 +83,12 @@ for i in range(0,len(t)):
     analytic[i] = ψ(x,t1)
 
 error = np.abs(np.abs(analytic) - np.abs(sol))
-plt.imshow(error[::-1], aspect="auto", extent=[x.min(), x.max(), t.min(), t.max()], cmap='viridis')
+plt.imshow(error[::-1], aspect="auto", extent=[x.min(), x.max(), t.min(), t.max()], cmap='viridis',norm=LogNorm())
+# plt.imshow(np.abs(sol))
 plt.colorbar(label='Absoulte error')
 plt.xlabel('x')
 plt.ylabel('t')
-plt.title('Error between Analytic and Numerical Solutions')
-plt.savefig(PATH+"abs_error.pdf")
+plt.title('Error between Analytic and Numerical Solutions, with derivitive N={}'.format(N))
+plt.savefig(PATH+"abs_error_log_{}.pdf".format(N))
+plt.show()
 plt.clf()
-
-plt.imshow(error[::-1], aspect="auto", extent=[x.min(), x.max(), t.min(), t.max()], cmap='viridis', norm=LogNorm())
-plt.colorbar(label='Absoulte error (log scale)')
-plt.xlabel('x')
-plt.ylabel('t')
-plt.title('Error between Analytic and Numerical Solutions (Log Scale)')
-plt.savefig(PATH+"abs_error_log.pdf")
-# plt.show()
-
-
-
-

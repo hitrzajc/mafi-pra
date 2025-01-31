@@ -5,6 +5,7 @@ from matplotlib.animation import FuncAnimation, FFMpegWriter
 from matplotlib.colors import LogNorm
 from tqdm import tqdm
 
+
 PATH = "../latex/pdf/"
 # print(plt.rcParams.keys())
 plt.rcParams['savefig.bbox'] = 'tight'
@@ -56,7 +57,9 @@ for t_siz in tqdm(range(5,Nt,5)):
         end = time()
         times[-1].append(end - start)
 
-plt.imshow(times, cmap="hot",extent=[5, Nx, 5, Nt,], norm=LogNorm())
+    
+
+plt.imshow(times[::-1], cmap="hot",extent=[5, Nx, 5, Nt,], norm=LogNorm())
 plt.colorbar(label="Čas [s]")
 plt.xlabel("Število točk v x")
 plt.ylabel("Število točk v t")
@@ -64,7 +67,7 @@ plt.title("Časovna zahtevnost")
 plt.savefig(PATH + "time_log.pdf")
 plt.clf()
 
-plt.imshow(times, cmap="hot",extent=[5, Nx, 5, Nt,],)
+plt.imshow(times[::-1], cmap="hot",extent=[5, Nx, 5, Nt,],)
 plt.colorbar(label="Čas [s]")
 plt.xlabel("Število točk v x")
 plt.ylabel("Število točk v t")
